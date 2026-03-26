@@ -244,32 +244,13 @@
             class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
             role="alert"
           >
-            <svg
-              class="w-4 h-4 me-2 shrink-0"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
             <span class="sr-only">Danger</span>
             <div>
               <span class="font-medium">Ensure that these requirements are met:</span>
               <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                 @if (registerForm.get('rePassword')?.hasError('required')) {
                   <li>Confirm Password is required</li>
-                } @else if (registerForm.get('rePassword')?.hasError('minlength')) {
-                  <li>Confirm Password must be at least 6 characters long</li>
-                } @else if (registerForm.get('rePassword')?.hasError('passwordMismatch')) {
+                } @else if (registerForm.get('rePassword')?.hasError('mismatch')) {
                   <li>Passwords do not match</li>
                 }
               </ul>
@@ -279,12 +260,18 @@
 
         <!-- Submit -->
         <button
-          [disabled]="registerForm.invalid"
+          [disabled]="isLoading"
           type="submit"
           class="w-full cursor-pointer disabled:bg-gray-600 disabled:cursor-not-allowed bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
         >
           Create Account
+          @if (isLoading) {
+            <span class="fas fa-spinner animate-spin"></span>
+          }
         </button>
+        @if (messError) {
+          <p class="text-red-900 bg-red-500 p-2 text-center w-1/2 mx-auto">{{ messError }}</p>
+        }
       </form>
 
       <!-- Divider -->
