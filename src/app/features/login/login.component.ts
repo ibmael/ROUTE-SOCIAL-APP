@@ -32,6 +32,8 @@ export class LoginComponent {
         next: (res) => {
           console.log(res);
           this.isLoading = false;
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('userId', JSON.stringify(res.data.user));
           this.routerLink.navigate(['/feed']);
         },
         error: (err) => {

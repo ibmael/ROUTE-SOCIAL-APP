@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { authGuard } from './core/auth/guards/auth-guard';
+import { guestGuard } from './core/auth/guards/guest-guard';
 
 export const routes: Routes = [
   // redirect only (no component here)
@@ -10,6 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [guestGuard],
     children: [
       {
         path: 'login',
@@ -35,6 +38,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'feed',
