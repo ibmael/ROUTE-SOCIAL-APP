@@ -84,7 +84,13 @@
           [disabled]="isLoading"
         >
           Login
+          @if (isLoading) {
+            <span class="fas fa-spinner animate-spin"></span>
+          }
         </button>
+        @if (mssError) {
+          <p class="text-red-900 bg-red-500 p-2 text-center w-1/2 mx-auto">{{ mssError }}</p>
+        }
       </form>
 
       <p class="text-sm text-gray-400 mt-6 text-center">

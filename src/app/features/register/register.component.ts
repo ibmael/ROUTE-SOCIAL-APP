@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 })
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
+  private readonly routerLink = inject(Router);
   messError: string = '';
   isLoading: boolean = false;
   registerSubscribe: Subscription = new Subscription();
@@ -55,6 +56,7 @@ export class RegisterComponent {
         next: (res) => {
           console.log(res);
           this.isLoading = false;
+          this.routerLink.navigate(['/login']);
         },
         error: (err) => {
           console.log(err);

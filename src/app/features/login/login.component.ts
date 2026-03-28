@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -12,8 +12,10 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent {
   private readonly authService = inject(AuthService);
+  private readonly routerLink = inject(Router);
   loginSubscribe: Subscription = new Subscription();
   isLoading: boolean = false;
+  mssError: string = '';
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -30,9 +32,11 @@ export class LoginComponent {
         next: (res) => {
           console.log(res);
           this.isLoading = false;
+          this.routerLink.navigate(['/feed']);
         },
         error: (err) => {
           console.log(err);
+          this.mssError = err.error.message;
           this.isLoading = false;
         },
       });
