@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
       withViewTransitions(),
-      // withHashLocation(),
+      withHashLocation(),
     ),
     // Use the Fetch API for HTTP requests
     provideHttpClient(withFetch()),

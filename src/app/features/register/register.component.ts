@@ -68,4 +68,11 @@ export class RegisterComponent {
       this.registerForm.markAllAsTouched();
     }
   }
+  showPassword(ele: HTMLInputElement): void {
+    if (ele.type === 'password') {
+      ele.type = 'text';
+    } else {
+      ele.type = 'password';
+    }
+  }
 }
