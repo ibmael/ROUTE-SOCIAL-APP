@@ -1,4 +1,8 @@
-<div class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col">
+<!-- Post Section -->
+<section>
+  <form
+    class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col"
+  >
     <div class="flex items-center gap-3 mb-3">
       <img
         src="https://i.pravatar.cc/150?img=11"
@@ -32,14 +36,18 @@
     </div>
 
     <hr class="border-t border-slate-800 mb-4" />
-
+    @if (imgUrl) {
+      <img [src]="imgUrl" class="w-full h-[200px] my-2 rounded object-cover" alt="Preview" />
+    }
     <div class="flex items-center justify-between">
-      <input type="file" id="post-file" class="hidden" />
+      <input (change)="onFileChange($event)" type="file" id="file" class="hidden" />
       <label
-        for="post-file"
+        for="file"
         class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group"
       >
-        <i class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"></i>
+        <i
+          class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"
+        ></i>
         <span class="text-[14px] font-semibold text-slate-600">Photo/video</span>
       </label>
 
@@ -50,211 +58,236 @@
         <i class="fa-regular fa-paper-plane text-sm"></i>
       </button>
     </div>
-  </div>
+  </form>
 
-  <div class="bg-white rounded-[16px] my-3 shadow-sm border border-slate-200 p-4 font-sans">
-    <div class="flex items-start justify-between mb-3">
-      <div class="flex items-center gap-3">
-        <img
-          src="https://i.pravatar.cc/150?img=11"
-          alt="Ahmed Menisy"
-          class="size-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50"
-        />
+  @for (post of postsList; track post._id) {
+    <div class="bg-white rounded-[16px] my-3 shadow-sm border border-slate-200 p-4 font-sans">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <img
+            [src]="post.user.photo"
+            [alt]="post.user.name"
+            class="size-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50"
+          />
 
-        <div>
-          <span class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
-            >Ahmed Menisy</span
-          >
-          <div class="flex items-center text-[13px] text-slate-500 mt-0.5 gap-1">
-            <span class="hover:underline cursor-pointer">@menisy</span>
-            <span>&middot;</span>
-            <span class="hover:underline cursor-pointer">12h</span>
-            <span>&middot;</span>
-
-            <div
-              class="p-0 w-fit items-center bg-neutral-secondary-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+          <div>
+            <span
+              class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
+              >Ahmed Menisy</span
             >
-              <select class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">
-                <option value="public">public</option>
-                <option value="following">followers</option>
-                <option value="only_me">only me</option>
-              </select>
+            <div class="flex items-center text-[13px] text-slate-500 mt-0.5 gap-1">
+              <span class="hover:underline cursor-pointer">@menisy</span>
+              <span>&middot;</span>
+              <span class="hover:underline cursor-pointer">12h</span>
+              <span>&middot;</span>
+
+              <div
+                class="p-0 w-fit items-center bg-neutral-secondary-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+              >
+                <select class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">
+                  <option value="public">public</option>
+                  <option value="following">followers</option>
+                  <option value="only_me">only me</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="relative group">
-        <button
-          id="dropdownMenuIconButton"
-          data-dropdown-toggle="dropdownDots"
-          class="text-heading bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
-          type="button"
-        >
-          <svg
-            class="w-6 h-6"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
+        <div class="relative group">
+          <button
+            id="dropdownMenuIconButton"
+            data-dropdown-toggle="dropdownDots"
+            class="text-heading bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+            type="button"
           >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="3"
-              d="M12 6h.01M12 12h.01M12 18h.01"
-            />
-          </svg>
-        </button>
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="3"
+                d="M12 6h.01M12 12h.01M12 18h.01"
+              />
+            </svg>
+          </button>
 
-        <div
-          id="dropdownDots"
-          class="z-30 hidden group-hover:block absolute bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+          <div
+            id="dropdownDots"
+            class="z-30 hidden group-hover:block absolute bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+          >
+            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownMenuIconButton">
+              <li>
+                <button
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                >
+                  Save Post
+                </button>
+                @if (post.user._id === userID) {
+                  <button
+                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                  >
+                    Edit post
+                  </button>
+                  <button
+                    class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                  >
+                    Delete post
+                  </button>
+                }
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-[15px] text-slate-900 mb-4">
+        @if (post.body) {
+          <p>{{ post.body }}</p>
+        }
+        @if (post.image) {
+          <img
+            src="{{ post.image }}"
+            [alt]="post.image"
+            class="w-full max-h-96 object-cover rounded-lg mt-3"
+          />
+        }
+      </div>
+
+      <div class="flex items-center justify-between text-[13px] text-slate-500 mb-3 px-1">
+        <div class="flex items-center gap-1.5 cursor-pointer hover:underline">
+          <div
+            class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xs"
+          >
+            <i class="fa-solid fa-thumbs-up"></i>
+          </div>
+          <span>{{ post.likesCount }} likes</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="cursor-pointer hover:underline">{{ post.sharesCount }} shares</span>
+          <span class="cursor-pointer hover:underline">{{ post.commentsCount }} comments</span>
+          <button class="font-semibold cursor-pointer text-blue-600 hover:underline">
+            View details
+          </button>
+        </div>
+      </div>
+
+      <hr class="border-t border-slate-200 mb-1" />
+
+      <div class="flex items-center justify-between px-1 py-1">
+        <button
+          class="flex-1 cursor-pointer flex items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
         >
-          <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownMenuIconButton">
-            <li>
-              <button class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                Save Post
-              </button>
-              <button class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                Edit post
-              </button>
-              <button
-                class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-              >
-                Delete post
-              </button>
-            </li>
-          </ul>
-        </div>
+          <i class="fa-regular fa-thumbs-up text-lg"></i>
+          Like
+        </button>
+        <button
+          class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
+        >
+          <i class="fa-regular fa-message text-lg"></i>
+          Comment
+        </button>
+        <button
+          class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
+        >
+          <i class="fa-solid fa-share text-lg"></i>
+          Share
+        </button>
       </div>
+
+      <hr class="border-t border-slate-200 mt-1 mb-4" />
     </div>
+  }
+</section>
 
-    <div class="text-[15px] text-slate-900 mb-4">
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae, quod?</p>
-      <img src="/assets/route.png" class="w-full max-h-90 object-cover rounded shadow mt-2" alt="" />
-    </div>
-
-    <div class="flex items-center justify-between text-[13px] text-slate-500 mb-3 px-1">
-      <div class="flex items-center gap-1.5 cursor-pointer hover:underline">
-        <div class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xs">
-          <i class="fa-solid fa-thumbs-up"></i>
-        </div>
-        <span>0 likes</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <span class="cursor-pointer hover:underline">0 shares</span>
-        <span class="cursor-pointer hover:underline">1 comments</span>
-        <button class="font-semibold cursor-pointer text-blue-600 hover:underline">View details</button>
-      </div>
-    </div>
-
-    <hr class="border-t border-slate-200 mb-1" />
-
-    <div class="flex items-center justify-between px-1 py-1">
-      <button
-        class="flex-1 cursor-pointer flex items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
-      >
-        <i class="fa-regular fa-thumbs-up text-lg"></i>
-        Like
-      </button>
-      <button
-        class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
-      >
-        <i class="fa-regular fa-message text-lg"></i>
-        Comment
-      </button>
-      <button
-        class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
-      >
-        <i class="fa-solid fa-share text-lg"></i>
-        Share
-      </button>
-    </div>
-
-    <hr class="border-t border-slate-200 mt-1 mb-4" />
+<!-- Comments Section -->
+<section class="border border-slate-200 rounded-[16px] p-4 bg-white" aria-label="Comments">
+  <div class="flex items-center gap-2 mb-2">
+    <h3 class="font-bold text-[15px] text-slate-900">Comments</h3>
+    <span class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">1</span>
   </div>
 
-  <section class="border border-slate-200 rounded-[16px] p-4 bg-white" aria-label="Comments">
-    <div class="flex items-center gap-2 mb-2">
-      <h3 class="font-bold text-[15px] text-slate-900">Comments</h3>
-      <span class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">1</span>
-    </div>
+  <div class="flex gap-2 mb-4 group">
+    <img
+      src="https://i.pravatar.cc/150?img=11"
+      alt="Ahmed Menisy"
+      class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
+    />
 
-    <div class="flex gap-2 mb-4 group">
-      <img
-        src="https://i.pravatar.cc/150?img=11"
-        alt="Ahmed Menisy"
-        class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
-      />
-
-      <div class="flex-1 flex flex-col items-start min-w-0">
-        <div class="bg-slate-100 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-full">
-          <div class="flex items-center gap-1.5 mb-0.5">
-            <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">Ahmed Menisy</span>
-          </div>
-
-          <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
-            <span>@menisy</span>
-            <span>&middot;</span>
-            <span>6s</span>
-          </div>
-
-          <p class="text-[14px] text-slate-800 wrap-break-word">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, amet!
-          </p>
-        </div>
-
-        <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
-          <span class="cursor-pointer hover:underline">6s</span>
-          <button class="cursor-pointer hover:underline">Like (0)</button>
-          <button class="cursor-pointer hover:underline">Reply</button>
-          <button
-            class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+    <div class="flex-1 flex flex-col items-start min-w-0">
+      <div class="bg-slate-100 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-full">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer"
+            >Ahmed Menisy</span
           >
-            <i class="fa-solid fa-ellipsis"></i>
-          </button>
         </div>
+
+        <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
+          <span>@menisy</span>
+          <span>&middot;</span>
+          <span>6s</span>
+        </div>
+
+        <p class="text-[14px] text-slate-800 wrap-break-word">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, amet!
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
+        <span class="cursor-pointer hover:underline">6s</span>
+        <button class="cursor-pointer hover:underline">Like (0)</button>
+        <button class="cursor-pointer hover:underline">Reply</button>
+        <button
+          class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <i class="fa-solid fa-ellipsis"></i>
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="flex gap-2 mt-4">
-      <img
-        src="https://i.pravatar.cc/150?img=11"
-        alt="Ahmed Menisy"
-        class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
-      />
+  <div class="flex gap-2 mt-4">
+    <img
+      src="https://i.pravatar.cc/150?img=11"
+      alt="Ahmed Menisy"
+      class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
+    />
 
-      <div
-        class="flex-1 bg-slate-100 border border-transparent focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50 focus-within:bg-white transition-all rounded-[20px] p-2 flex flex-col"
-      >
-        <textarea
-          class="w-full bg-transparent border-none text-[14px] text-slate-800 placeholder-slate-500 resize-none outline-none px-2 pt-1 pb-3 min-h-[60px]"
-          placeholder="Comment as ..."
-        ></textarea>
+    <div
+      class="flex-1 bg-slate-100 border border-transparent focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50 focus-within:bg-white transition-all rounded-[20px] p-2 flex flex-col"
+    >
+      <textarea
+        class="w-full bg-transparent border-none text-[14px] text-slate-800 placeholder-slate-500 resize-none outline-none px-2 pt-1 pb-3 min-h-[60px]"
+        placeholder="Comment as ..."
+      ></textarea>
 
-        <div class="flex items-center justify-between px-1">
-          <div class="flex items-center gap-1">
-            <input type="file" id="comment-file" class="hidden" />
-            <label
-              for="comment-file"
-              class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group"
-            >
-              <i
-                class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"
-              ></i>
-              <span class="text-[14px] font-semibold text-slate-600">Photo/video</span>
-            </label>
-          </div>
-
-          <button
-            class="w-8 cursor-pointer h-8 rounded-full bg-blue-400 hover:bg-blue-500 text-white flex items-center justify-center transition-colors"
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-1">
+          <input type="file" id="comment-file" class="hidden" />
+          <label
+            for="comment-file"
+            class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group"
           >
-            <i class="fa-solid fa-paper-plane text-[13px] ms-1 mt-.5"></i>
-          </button>
+            <i
+              class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"
+            ></i>
+            <span class="text-[14px] font-semibold text-slate-600">Photo/video</span>
+          </label>
         </div>
+
+        <button
+          class="w-8 cursor-pointer h-8 rounded-full bg-blue-400 hover:bg-blue-500 text-white flex items-center justify-center transition-colors"
+        >
+          <i class="fa-solid fa-paper-plane text-[13px] ms-1 mt-.5"></i>
+        </button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
