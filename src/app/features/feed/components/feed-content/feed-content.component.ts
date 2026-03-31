@@ -48,11 +48,45 @@ export class FeedContentComponent implements OnInit {
       };
     }
   }
-  submitForm(e: Event): void {
+  submitForm(e: Event, postForm: HTMLFormElement): void {
     e.preventDefault();
     console.log(this.content.value);
     console.log(this.privacy.value);
     // selectedFile
     console.log(this.selectedFile);
+    const formData = new FormData();
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+    if (this.content.value) {
+      formData.append('body', this.content.value);
+    }
+    if (this.privacy.value) {
+      formData.append('privacy', this.privacy.value);
+    }
+    this.postsService.createPostRequest(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.getPostsData();
+        postForm.reset();
+        this.imgUrl = '';
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  deletePost(postId: string): void {
+    this.postsService.deletePost(postId).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.data.success) {
+          this.getPostsData();
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

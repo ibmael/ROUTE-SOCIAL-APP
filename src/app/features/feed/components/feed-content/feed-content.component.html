@@ -1,7 +1,8 @@
 <!-- Post Section -->
 <section>
   <form
-    (submit)="submitForm($event)"
+    #postForm
+    (submit)="submitForm($event, postForm)"
     class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col"
   >
     <div class="flex items-center gap-3 mb-3">
@@ -78,12 +79,12 @@
           <div>
             <span
               class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
-              >Ahmed Menisy</span
+              >{{ post.user.name }}</span
             >
             <div class="flex items-center text-[13px] text-slate-500 mt-0.5 gap-1">
-              <span class="hover:underline cursor-pointer">@menisy</span>
+              <span class="hover:underline cursor-pointer">@{{ post.user.username }}</span>
               <span>&middot;</span>
-              <span class="hover:underline cursor-pointer">12h</span>
+              <span class="hover:underline cursor-pointer">{{ post.createdAt }}</span>
               <span>&middot;</span>
 
               <div
@@ -142,6 +143,7 @@
                     Edit post
                   </button>
                   <button
+                    (click)="deletePost(post._id)"
                     class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                   >
                     Delete post
