@@ -1,6 +1,7 @@
 <!-- Post Section -->
 <section>
   <form
+    (submit)="submitForm($event)"
     class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col"
   >
     <div class="flex items-center gap-3 mb-3">
@@ -18,7 +19,10 @@
         >
           <i class="fa-solid fa-earth-americas text-[11px] text-slate-600"></i>
 
-          <select class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">
+          <select
+            [formControl]="privacy"
+            class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs"
+          >
             <option value="public">public</option>
             <option value="following">followers</option>
             <option value="only_me">only me</option>
@@ -29,6 +33,7 @@
 
     <div class="mb-4">
       <textarea
+        [formControl]="content"
         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-[15px] text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-300 transition-all resize-y min-h-30"
         placeholder="What's on your mind...?"
         aria-label="Create a new post"

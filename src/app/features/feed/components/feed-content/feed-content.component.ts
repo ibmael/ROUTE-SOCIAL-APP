@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../../../core/services/posts.service';
 import { Post } from '../../../../core/models/post.interface';
-import { NgClass } from '../../../../../../node_modules/@angular/common/common_module.d';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [NgClass],
+  imports: [ReactiveFormsModule],
   host: {
     class: 'col-span-1 md:col-span-2 lg:col-span-2 flex flex-col gap-4',
   },
@@ -16,6 +16,8 @@ export class FeedContentComponent implements OnInit {
   private readonly postsService = inject(PostsService);
   postsList: Post[] = [];
   selectedFile!: File;
+  content: FormControl = new FormControl('');
+  privacy: FormControl = new FormControl('public');
   userID: string = '';
   imgUrl: string | ArrayBuffer | null | undefined;
   ngOnInit(): void {
@@ -45,5 +47,12 @@ export class FeedContentComponent implements OnInit {
         this.imgUrl = e.target?.result;
       };
     }
+  }
+  submitForm(e: Event): void {
+    e.preventDefault();
+    console.log(this.content.value);
+    console.log(this.privacy.value);
+    // selectedFile
+    console.log(this.selectedFile);
   }
 }
