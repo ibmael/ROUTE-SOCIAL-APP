@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../../../core/services/posts.service';
 import { Post } from '../../../../core/models/post.interface';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommentPostComponent } from './comment-post/comment-post.component';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommentPostComponent],
   host: {
     class: 'col-span-1 md:col-span-2 lg:col-span-2 flex flex-col gap-4',
   },
