@@ -20,10 +20,15 @@ export class FeedContentComponent implements OnInit {
   content: FormControl = new FormControl('');
   privacy: FormControl = new FormControl('public');
   userID: string = '';
+  userName: string = '';
+  userPhoto: string = '';
   imgUrl: string | ArrayBuffer | null | undefined;
   ngOnInit(): void {
     this.getPostsData();
-    this.userID = JSON.parse(localStorage.getItem('userId')!)?._id;
+    const user = JSON.parse(localStorage.getItem('userId')!);
+    this.userID = user?._id;
+    this.userName = user?.name ?? '';
+    this.userPhoto = user?.photo ?? '';
   }
 
   getPostsData(): void {

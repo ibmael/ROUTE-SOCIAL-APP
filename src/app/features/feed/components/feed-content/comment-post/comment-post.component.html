@@ -2,47 +2,61 @@
 <section class="border border-slate-200 rounded-[16px] p-4 bg-white" aria-label="Comments">
   <div class="flex items-center gap-2 mb-2">
     <h3 class="font-bold text-[15px] text-slate-900">Comments</h3>
-    <span class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">1</span>
+    <span class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">{{
+      commentsList.length
+    }}</span>
   </div>
 
-  <div class="flex gap-2 mb-4 group">
-    <img
-      src="https://i.pravatar.cc/150?img=11"
-      alt="Ahmed Menisy"
-      class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
-    />
+  <!-- Comments List -->
+  @for (comment of commentsList; track comment._id) {
+    <div class="flex gap-2 mb-4 group">
+      <img
+        [src]="comment.commentCreator.photo"
+        [alt]="comment.commentCreator.name"
+        class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
+      />
 
-    <div class="flex-1 flex flex-col items-start min-w-0">
-      <div class="bg-slate-100 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-full">
-        <div class="flex items-center gap-1.5 mb-0.5">
-          <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer"
-            >Ahmed Menisy</span
+      <div class="flex-1 flex flex-col items-start min-w-0">
+        <div class="bg-slate-100 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-full">
+          <div class="flex items-center gap-1.5 mb-0.5">
+            <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">{{
+              comment.commentCreator.name
+            }}</span>
+          </div>
+
+          <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
+            <span>@{{ comment.commentCreator.username }}</span>
+            <span>&middot;</span>
+            <span>{{ comment.createdAt }}</span>
+          </div>
+
+          @if (comment.content) {
+            <p class="text-[14px] text-slate-800 wrap-break-word">
+              {{ comment.content }}
+            </p>
+          }
+          @if (comment.image) {
+            <img
+              [src]="comment.image"
+              class="w-full max-h-96 object-cover rounded-lg mt-3"
+              alt="comment image"
+            />
+          }
+        </div>
+
+        <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
+          <span class="cursor-pointer hover:underline">{{ comment.createdAt }}</span>
+          <button class="cursor-pointer hover:underline">Like ({{ comment.likes.length }})</button>
+          <button class="cursor-pointer hover:underline">Reply ({{ comment.repliesCount }})</button>
+          <button
+            class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
           >
+            <i class="fa-solid fa-ellipsis"></i>
+          </button>
         </div>
-
-        <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
-          <span>@menisy</span>
-          <span>&middot;</span>
-          <span>6s</span>
-        </div>
-
-        <p class="text-[14px] text-slate-800 wrap-break-word">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, amet!
-        </p>
-      </div>
-
-      <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
-        <span class="cursor-pointer hover:underline">6s</span>
-        <button class="cursor-pointer hover:underline">Like (0)</button>
-        <button class="cursor-pointer hover:underline">Reply</button>
-        <button
-          class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          <i class="fa-solid fa-ellipsis"></i>
-        </button>
       </div>
     </div>
-  </div>
+  }
 
   <div class="flex gap-2 mt-4">
     <img
