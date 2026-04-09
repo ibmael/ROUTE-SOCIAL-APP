@@ -12,6 +12,8 @@ export class CommentPostComponent implements OnInit {
   private readonly commentsService = inject(CommentsService);
   commentsList: CommentInterface[] = [];
   @Input() postId: string = '';
+  @Input() userPhoto: string = '';
+  @Input() userName: string = '';
   isSubmitting = false;
 
   ngOnInit(): void {

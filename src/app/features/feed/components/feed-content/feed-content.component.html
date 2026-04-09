@@ -196,6 +196,7 @@
           Like
         </button>
         <button
+          #commentButton
           class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors"
         >
           <i class="fa-regular fa-message text-lg"></i>
@@ -210,7 +211,9 @@
       </div>
 
       <hr class="border-t border-slate-200 mt-1 mb-4" />
-      <app-comment-post [postId]="post._id" />
+      @defer (on interaction(commentButton)) {
+        <app-comment-post [postId]="post._id" [userPhoto]="userPhoto" [userName]="userName" />
+      }
     </div>
   }
 </section>
