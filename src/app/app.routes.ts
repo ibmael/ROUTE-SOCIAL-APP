@@ -63,6 +63,11 @@ export const routes: Routes = [
             (m) => m.ChangePasswordComponent,
           ),
       },
+      {
+        path: 'details/:id',
+        loadComponent: () =>
+          import('./features/detailes/detailes.component').then((m) => m.DetailesComponent),
+      },
     ],
   },
 

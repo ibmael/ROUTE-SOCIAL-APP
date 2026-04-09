@@ -3,10 +3,11 @@ import { PostsService } from '../../../../core/services/posts.service';
 import { Post } from '../../../../core/models/post.interface';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommentPostComponent } from './comment-post/comment-post.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, CommentPostComponent],
+  imports: [ReactiveFormsModule, CommentPostComponent, RouterLink],
   host: {
     class: 'col-span-1 md:col-span-2 lg:col-span-2 flex flex-col gap-4',
   },

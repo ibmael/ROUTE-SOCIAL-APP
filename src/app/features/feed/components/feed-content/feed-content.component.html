@@ -155,7 +155,10 @@
         </div>
       </div>
 
-      <div class="text-[15px] text-slate-900 mb-4">
+      <div
+        [routerLink]="['/details', post._id]"
+        class="cursor-pointer text-[15px] text-slate-900 mb-4"
+      >
         @if (post.body) {
           <p>{{ post.body }}</p>
         }
