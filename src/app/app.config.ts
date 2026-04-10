@@ -11,7 +11,13 @@ import {
 } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { httpHeadersInterceptor } from './core/interceptors/http-headers-interceptor';
+import { errorInterceptor } from './core/interceptors/error-interceptor';
+import { provideToastr } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { importProvidersFrom } from '@angular/core';
+import { loadingInterceptor } from './core/interceptors/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +31,11 @@ export const appConfig: ApplicationConfig = {
       withHashLocation(),
     ),
     // Use the Fetch API for HTTP requests
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([httpHeadersInterceptor, errorInterceptor, loadingInterceptor]),
+    ),
+    provideToastr(),
+    importProvidersFrom(NgxSpinnerModule),
   ],
 };

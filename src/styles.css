@@ -3,13 +3,14 @@
 @import 'flowbite/src/themes/default';
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+@import 'ngx-toastr/toastr';
 
-@theme{
-  --color-mainColor: #00298D;
-  --color-secondaryColor: #F0F2F5;
+@theme {
+  --color-mainColor: #00298d;
+  --color-secondaryColor: #f0f2f5;
 }
 
-body{
-  font-family: "SN Pro", sans-serif;
+body {
+  font-family: 'SN Pro', sans-serif;
   background-color: var(--color-secondaryColor);
 }
