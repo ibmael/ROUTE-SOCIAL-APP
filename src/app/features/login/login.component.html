@@ -32,9 +32,6 @@
             placeholder="Enter your email or username"
             class="w-full rounded-lg bg-gray-700 border border-gray-600 text-white p-3 focus:ring-2 focus:ring-green-400 focus:outline-none"
           />
-          <p *ngIf="email?.invalid && email?.touched" class="text-red-500 text-sm mt-1">
-            <span *ngIf="email?.errors?.['required']">This field is required</span>
-          </p>
         </div>
         @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
           <p class="text-red-500 text-sm mt-1">
@@ -55,12 +52,6 @@
             placeholder="••••••••"
             class="w-full rounded-lg bg-gray-700 border border-gray-600 text-white p-3 focus:ring-2 focus:ring-green-400 focus:outline-none"
           />
-          <p *ngIf="password?.invalid && password?.touched" class="text-red-500 text-sm mt-1">
-            <span *ngIf="password?.errors?.['required']">Password is required</span>
-            <span *ngIf="password?.errors?.['pattern']">
-              Password must be at least 6 characters long and include letters and numbers
-            </span>
-          </p>
         </div>
         @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
           <p class="text-red-500 text-sm mt-1">
@@ -73,7 +64,7 @@
         }
         <!-- Forgot Password -->
         <div class="text-right">
-          <a routerLink="/forgot-password" class="text-green-400 hover:underline text-sm"
+          <a routerLink="/forget" class="text-green-400 hover:underline text-sm"
             >Forgot Password?</a
           >
         </div>

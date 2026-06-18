@@ -45,9 +45,19 @@ export const routes: Routes = [
         loadComponent: () => import('./features/feed/feed.component').then((m) => m.FeedComponent),
       },
       {
+        path: 'profile/:userId',
+        loadComponent: () =>
+          import('./features/profile/profile.component').then((m) => m.ProfileComponent),
+      },
+      {
         path: 'profile',
         loadComponent: () =>
           import('./features/profile/profile.component').then((m) => m.ProfileComponent),
+      },
+      {
+        path: 'bookmarks',
+        loadComponent: () =>
+          import('./features/bookmarks/bookmarks.component').then((m) => m.BookmarksComponent),
       },
       {
         path: 'notifications',

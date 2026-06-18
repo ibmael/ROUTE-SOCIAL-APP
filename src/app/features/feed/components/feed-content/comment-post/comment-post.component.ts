@@ -1,6 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommentsService } from './services/comments.service';
 import { CommentInterface } from './interfaces/comment.interface';
+import { UserService } from '../../../../../core/services/user.service';
 
 @Component({
   selector: 'app-comment-post',
@@ -10,25 +11,26 @@ import { CommentInterface } from './interfaces/comment.interface';
 })
 export class CommentPostComponent implements OnInit {
   private readonly commentsService = inject(CommentsService);
+  private readonly userService = inject(UserService);
+
   commentsList: CommentInterface[] = [];
-  @Input() postId: string = '';
-  @Input() userPhoto: string = '';
-  @Input() userName: string = '';
+  @Input() postId = '';
+  @Input() userPhoto = '';
+  @Input() userName = '';
   isSubmitting = false;
+  currentUserId = '';
 
   ngOnInit(): void {
+    this.currentUserId = this.userService.getCurrentUserId();
     if (this.postId) {
       this.getComments();
     }
   }
+
   getComments(): void {
     this.commentsService.getComments(this.postId).subscribe({
       next: (res) => {
-        console.log(res);
         this.commentsList = res.data.comments;
-      },
-      error: (err) => {
-        console.log(err);
       },
     });
   }
@@ -40,16 +42,42 @@ export class CommentPostComponent implements OnInit {
     }
 
     this.isSubmitting = true;
-    this.commentsService.creatComments(this.postId, { content: trimmedContent }).subscribe({
+    this.commentsService.createComment(this.postId, { content: trimmedContent }).subscribe({
       next: () => {
         textarea.value = '';
         this.isSubmitting = false;
         this.getComments();
       },
-      error: (err) => {
+      error: () => {
         this.isSubmitting = false;
-        console.log(err);
       },
     });
+  }
+
+  toggleCommentLike(comment: CommentInterface): void {
+    this.commentsService.toggleCommentLike(this.postId, comment._id).subscribe({
+      next: (res) => {
+        const updated = res.data?.comment ?? res.data;
+        if (updated) {
+          comment.likes = updated.likes ?? comment.likes;
+        }
+      },
+    });
+  }
+
+  deleteComment(commentId: string): void {
+    this.commentsService.deleteComment(this.postId, commentId).subscribe({
+      next: () => {
+        this.commentsList = this.commentsList.filter((c) => c._id !== commentId);
+      },
+    });
+  }
+
+  isCommentLiked(comment: CommentInterface): boolean {
+    return comment.likes?.some((like) => like === this.currentUserId || like?._id === this.currentUserId);
+  }
+
+  canDeleteComment(comment: CommentInterface): boolean {
+    return comment.commentCreator._id === this.currentUserId;
   }
 }

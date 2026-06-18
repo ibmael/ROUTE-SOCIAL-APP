@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,17 +11,18 @@ import { Router } from '@angular/router';
 export class AuthService {
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
 
   signUp(data: object): Observable<any> {
-    const signUpResponse = this.httpClient.post(`${environment.BASE_URL}/users/signup`, data);
-    return signUpResponse;
+    return this.httpClient.post(`${environment.BASE_URL}/users/signup`, data);
   }
+
   signIn(data: object): Observable<any> {
-    const signInResponse = this.httpClient.post(`${environment.BASE_URL}/users/signin`, data);
-    return signInResponse;
+    return this.httpClient.post(`${environment.BASE_URL}/users/signin`, data);
   }
+
   signOut(): void {
-    localStorage.removeItem('token');
+    this.userService.clearSession();
     this.router.navigate(['/login']);
   }
 }

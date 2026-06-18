@@ -1,0 +1,44 @@
+<div class="max-w-2xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold text-slate-900 mb-6">Saved Posts</h1>
+
+  @if (isLoading) {
+    <div class="space-y-3">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="bg-white rounded-xl border border-slate-200 p-4 animate-pulse h-24"></div>
+      }
+    </div>
+  } @else if (posts.length === 0) {
+    <div class="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500">
+      <i class="fa-regular fa-bookmark text-4xl text-slate-300 mb-3"></i>
+      <p class="font-medium">No saved posts</p>
+      <p class="text-sm mt-1">Bookmark posts from the feed to see them here.</p>
+    </div>
+  } @else {
+    <div class="space-y-3">
+      @for (post of posts; track post._id) {
+        <a
+          [routerLink]="['/details', post._id]"
+          class="block bg-white rounded-xl border border-slate-200 p-4 hover:border-blue-200 transition-colors"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <img
+              [src]="post.user.photo || '/assets/user-icon.svg'"
+              [alt]="post.user.name"
+              class="w-8 h-8 rounded-full object-cover"
+            />
+            <div>
+              <p class="text-sm font-bold text-slate-900">{{ post.user.name }}</p>
+              <p class="text-xs text-slate-500">{{ post.createdAt }}</p>
+            </div>
+          </div>
+          @if (post.body) {
+            <p class="text-slate-800 text-sm line-clamp-2">{{ post.body }}</p>
+          }
+          @if (post.image) {
+            <img [src]="post.image" alt="" class="w-full h-32 object-cover rounded-lg mt-2" />
+          }
+        </a>
+      }
+    </div>
+  }
+</div>

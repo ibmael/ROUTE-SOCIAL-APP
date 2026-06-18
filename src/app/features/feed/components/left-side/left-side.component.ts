@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-left-side',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   host: {
     class: 'hidden md:block col-span-1',
   },
